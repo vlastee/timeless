@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
-import styles from './Dashboard.module.css';
+import styles from './MenuPagesList.module.css';
 import {selectUiState, setShowMenuState, setCurrentMenuState} from '../uiStateSlice'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function Dashboard() {
+export function MenuPagesList() {
   const uiState = useSelector(selectUiState);
   const classes = useStyles();
   const [showMenu, setShowMenu] = useState(false);
