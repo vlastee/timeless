@@ -6,11 +6,18 @@ import './App.css';
 import { useSelector } from 'react-redux';
 import {selectUiState} from './features/uiStateSlice';
 import TableElements from './features/TaskElement/TableElement';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useStyles } from './features/Theme/Theme';
+
+
 
 
 function App() {
   const uiState = useSelector(selectUiState);
   const [currentMenu, setCurrentMenu] = useState(uiState.currentMenu)
+  const classes = useStyles();
+
+  
 
 
   useEffect(()=>{
@@ -19,9 +26,12 @@ function App() {
 
   return (
     <div className="App">
-        <TopBar/>
+        
         <MenuPagesList />
-        <TableElements />
+        <div className={uiState.showMenu?classes.content:classes.contentShift}>
+          <TopBar/>
+          <TableElements />
+        </div>
     </div>
   );
 }

@@ -7,33 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 800,
-    "& .MuiTableRow-head":{
-      margin: '0px!important'
-    },
-    "& .MuiTableCell-head":{
-      padding: '0px',
-    },
-    "& .MuiTableContainer-root":{
-      
-    }
-  },
-  tableContainer: {
-    margin: '1vh',
-    width: 'auto',
-  },
-  root:{
-    "& .MuiTableCell-body": {
-
-    }
-  },
-  userNames: {
-    
-  }
-});
+import { useStyles } from '../Theme/Theme';
+import {selectUiState} from '../uiStateSlice';
+import { useSelector } from 'react-redux';
 
 function createData(task_type, task_tags, task_name, users, customers, timeframe, time_spent) {
   return { task_type, task_tags, task_name, users, customers, timeframe, time_spent };
@@ -51,11 +27,11 @@ const rows = [
 
 export default function BasicTable() {
   const classes = useStyles();
-  
+  const uiState = useSelector(selectUiState);
 
   return (
     
-  <div>
+  <div className={classes.tablesContainer}>
     {console.log(rows)}
     {rows.map((row) => (
 

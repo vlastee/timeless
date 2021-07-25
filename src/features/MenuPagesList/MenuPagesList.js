@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import styles from './MenuPagesList.module.css';
 import {selectUiState, setShowMenuState, setCurrentMenuState} from '../uiStateSlice'
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { ListItemText, ListItemIcon, ListItem, IconButton, Divider, List, Drawer, Grid } from '@material-ui/core';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import InboxIcon from '@material-ui/icons/Inbox';
+import MailIcon from '@material-ui/icons/Mail';
+import { useStyles } from '../Theme/Theme';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
 
 export function MenuPagesList() {
   const uiState = useSelector(selectUiState);
   const classes = useStyles();
+  const theme = useTheme();
   const [showMenu, setShowMenu] = useState(false);
   const [currentMenu, setCurrentMenu] = useState(uiState.currentMenu)
   
@@ -40,6 +42,11 @@ export function MenuPagesList() {
     console.log('Menu is '+ (uiState.showMenu ?'shown':'hidden'));
   },[uiState.showMenu])
 
+  const handleDrawerClose = () => {
+    setShowMenu(false);
+    dispatch(setShowMenuState(false));
+  };
+
 
   return (
     <Grid
@@ -55,17 +62,55 @@ export function MenuPagesList() {
         justifyContent="center"
         alignItems="flex-start"
       >
-        {showMenu
-          ? <Paper className={classes.paper}>
-            <MenuList>
-              {uiState.availableMenus.map((menu,i)=>{
-                return(
-                  <MenuItem onClick={(e)=>{setCurrentMenu(e.target.textContent); dispatch(setShowMenuState(false))}} key={menu}>{menu}</MenuItem>
-                );
-              })}
-            </MenuList>
-          </Paper>
+        {showMenu ?
+          // <Paper className={classes.paper}>
+          //   <MenuList>
+          //     {uiState.availableMenus.map((menu,i)=>{
+          //       return(
+          //         <MenuItem onClick={(e)=>{setCurrentMenu(e.target.textContent); dispatch(setShowMenuState(false))}} key={menu}>{menu}</MenuItem>
+          //       );
+          //     })}
+          //   </MenuList>
+          // </Paper>
+           <Drawer
+           className={classes.drawer}
+           variant="persistent"
+           anchor="left"
+           open={showMenu}
+           classes={{
+             paper: classes.drawerPaper,
+           }}
+         >
+           <div className={classes.drawerHeader}>
+             <IconButton onClick={handleDrawerClose}>
+               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+             </IconButton>
+           </div>
+           <Divider />
+           <List>
+             {uiState.availableMenus.map((menu,i)=>(
+               <ListItem 
+                button 
+                key={menu.name}
+                onClick={(e)=>{setCurrentMenu(e.target.textContent)}}
+                >
+                 <ListItemIcon>{menu.icon}</ListItemIcon>
+                 <ListItemText primary={menu.name} />
+               </ListItem>
+             ))}
+           </List>
+           <Divider />
+           <List>
+             {['All mail', 'Trash', 'Spam'].map((text, index) => (
+               <ListItem button key={text}>
+                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                 <ListItemText primary={text} />
+               </ListItem>
+             ))}
+           </List>
+         </Drawer>
           : ''     
+
 
         }
 

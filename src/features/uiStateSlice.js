@@ -1,9 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 const initialState = {
   showMenu: false,
   currentMenu: 'Dashboard',
-  availableMenus: ['Dashboard', 'Projects', 'My Tasks'],
+  availableMenus: [
+    {name:'Dashboard', icon:<EventNoteIcon/>},
+    {name:'Projects', icon:<AssignmentIcon/>},
+    {name:'My Tasks', icon:<AssignmentIndIcon/>},
+  ],
   status: 'idle',
 };
 
