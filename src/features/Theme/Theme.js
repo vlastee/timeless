@@ -1,6 +1,31 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,createTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 200;
+
+export default createTheme({
+    palette: {
+        primary: { // works
+          main: '#165788',
+          contrastText: '#fff',
+        },
+        secondary: { // works
+          main: '#69BE28',
+          contrastText: '#fff',
+        },
+        companyBlue: {
+            backgroundColor: '#65CFE9',
+            color: '#fff',
+        },
+        companyRed: { 
+            backgroundColor: '#E44D69',
+            color: '#000',
+        },
+        accent: { 
+            backgroundColor: '#ac099c', 
+            color: '#000',
+        },
+    },
+});
 
 export const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,4 +122,32 @@ export const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+
+    projectColorDiv:{
+
+        backgroundColor: '#4915e6',
+       //width: '100%',
+        minWidth: '800px',
+    },
+    taskType:{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'start',
+        alignItems: 'center',
+        paddingBottom: '5px',
+        paddingLeft: '10px',
+        paddingTop: '5px',
+        color: 'white',
+        fontWeight: 'medium',
+    },
+    taskTypeText:{
+        display: 'flex',
+        flexDirection: 'row',
+        paddingRight: '10px',
+        paddingBottom: '5px',
+    },
+    tagAttached:{
+        marginInline: '5px',
+        color: '#ffffff'
+    }
 }));
