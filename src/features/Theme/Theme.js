@@ -149,5 +149,11 @@ export const useStyles = makeStyles((theme) => ({
     tagAttached:{
         marginInline: '5px',
         color: '#ffffff'
+    },
+    v: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'center',
+        alignItems: 'center',
     }
 }));

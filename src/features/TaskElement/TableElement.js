@@ -1,24 +1,29 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Table, Avatar,
+  Table,
   Grid,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Chip,
+  IconButton
 } from '@material-ui/core';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { useStyles } from '../Theme/Theme';
 import { selectUiState } from '../uiStateSlice';
 import { useSelector } from 'react-redux';
-import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
-import IconButton from '@material-ui/core/IconButton';
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import CustomAvatar from './ChildrenElements/CustomAvatar';
+import {
+  millisecondsToTime,
+  timeLeftInDays,
+} from '../Methods/TimeMethods';
+import { CustomTooltip } from '../CustomTooltip/CustomTooltipElement';
 
 function createData(task_type, task_tags, task_name, users, customers, timeframe, time_spent) {
   return { task_type, task_tags, task_name, users, customers, timeframe, time_spent };
@@ -27,9 +32,9 @@ function createData(task_type, task_tags, task_name, users, customers, timeframe
 
 
 const rows = [
-  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }], ['customer1', 'customer2'], ['timestamp1', 'timestamp1'], [{ date: '21-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '22-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '23-06-08', start_time: '07:07:14', end_time: '10:45:16' }]),
-  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }], ['customer1', 'customer2'], ['timestamp1', 'timestamp1'], [{ date: '21-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '22-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '23-06-08', start_time: '07:07:14', end_time: '10:45:16' }]),
-  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }], ['customer1', 'customer2'], ['timestamp1', 'timestamp1'], [{ date: '21-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '22-06-08', start_time: '07:07:14', end_time: '10:45:16' }, { date: '23-06-08', start_time: '07:07:14', end_time: '10:45:16' }]),
+  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }, { user_first_name: 'Dmytro', user_last_name: 'Klymenko', email: 'dmytro.klymenko@gmail.com', team: 'Developers', role: 'Back End Developer' }, { user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }, { user_first_name: 'Dmytro', user_last_name: 'Klymenko', email: 'dmytro.klymenko@gmail.com', team: 'Developers', role: 'Back End Developer' }, { user_first_name: 'Dmytro', user_last_name: 'Klymenko', email: 'dmytro.klymenko@gmail.com', team: 'Developers', role: 'Back End Developer' }], ['customer1', 'customer2'], { created: '2021-08-13', due_date: '2021-08-17' }, [{ start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }]),
+  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }, { name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }], ['customer1', 'customer2'], { created: '2021-08-13', due_date: '2021-08-21' }, [{ start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }]),
+  createData('Programming', [{ name: 'tag1', icon: <FaceIcon /> }], 'Creating element for React App', [{ user_first_name: 'Volodymyr', user_last_name: 'Vlasenko', email: 'volodymr.vlasenko@gmail.com', team: 'Developers', role: 'Lead Developer' }], ['customer1', 'customer2'], { created: '2021-08-13', due_date: '2021-08-23' }, [{ start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 10:45:16' }, { start_time: '2021-08-14 07:07:14', end_time: '2021-08-14 12:12:16' }]),
 ];
 
 
@@ -44,8 +49,8 @@ export default function BasicTable() {
 
   return (
 
-    <div className={classes.tablesContainer}>
-      {console.log(rows)}
+    <div className={classes.tablesContainer} key={'table'}>
+      {/* {console.log(rows)} */}
       {rows.map((row, i) => (
 
         <TableContainer className={classes.tableContainer} component={Paper} key={row.task_name + i}>
@@ -72,14 +77,14 @@ export default function BasicTable() {
             </TableHead>
             <TableBody>
 
-              <TableRow key={row.task_name}>
+              <TableRow key={row.task_name + i}>
                 <TableCell align="center" className={classes.userNames}>{row.task_name}</TableCell>
-                <TableCell component="th" scope="row">
-                  <Grid container>
+                <TableCell component="th" scope="row" align="center">
+                  <Grid container justifyContent='center'>
                     <Grid item lg={2}>
-                      <AvatarGroup max={4}>
-                        {row.users.map((user) => {
-                          return <CustomAvatar user={user} />
+                      <AvatarGroup max={4} >
+                        {row.users.map((user, i) => {
+                          return <CustomAvatar user={user} key={row.task_name + i + 'avatars' + i} />
                           return user.user_first_name + " " + user.user_last_name
                         })}
                       </AvatarGroup>
@@ -87,13 +92,34 @@ export default function BasicTable() {
                   </Grid>
                 </TableCell>
 
-                <TableCell align="center">{row.customers}</TableCell>
-                <TableCell align="center">{row.timeframe}</TableCell>
-                <TableCell component="th" scope="row">
-                  {row.time_spent.map((timeObject) => {
-                    return timeObject.date + " " + timeObject.start_time + " " + timeObject.end_time
-                  })}
+                <TableCell align="center">
+                  <div className={classes.flexDirectionColumn}>
+                    {row.customers.map((customer) => {
+                      return (<div key={row.task_name + i + 'customer' + customer}>{customer}</div>);
+                    })}
+                  </div>
                 </TableCell>
+                <TableCell align="center">
+                  <CustomTooltip
+                    elements={
+                      <div>
+                        <Grid container justifyContent='center' display='flex' flexdirection='column'>
+                          {row.timeframe.created}
+                        </Grid>
+                        <Grid container justifyContent='center' display='flex' flexdirection='column'>
+                          {row.timeframe.due_date}
+                        </Grid>
+                      </div>
+                    }
+                    tooltipElements={<div>
+                      {timeLeftInDays(row.timeframe.due_date)}
+                    </div>}
+                  />
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {millisecondsToTime(row.time_spent)}
+                </TableCell>
+
               </TableRow>
 
             </TableBody>

@@ -1,25 +1,22 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Popper, Paper } from '@material-ui/core';
 
 
 
 
 
-
 export default function CustomAvatar(props) {
-
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleOnHover = (event) => {
-        console.log("Hovered");
-        console.log(event);
+        // console.log("Hovered");
+        // console.log(event);
         setAnchorEl(event.target);
     };
 
     const handleOnLeave = (event) => {
-        console.log("Left");
-        console.log(event);
+        // console.log("Left");
+        // console.log(event);
         setAnchorEl(null);
     };
 
@@ -28,7 +25,7 @@ export default function CustomAvatar(props) {
 
 
     return (
-        <>
+        <div>
             <Avatar
                 alt={props.user.user_first_name + " " + props.user.user_last_name}
                 src="."
@@ -42,11 +39,11 @@ export default function CustomAvatar(props) {
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                anchorOrigin={{
+                anchororigin={{
                     vertical: 'bottom',
                     horizontal: 'center',
                 }}
-                transformOrigin={{
+                transformorigin={{
                     vertical: 'top',
                     horizontal: 'center',
                 }}
@@ -55,6 +52,6 @@ export default function CustomAvatar(props) {
                     <Typography >{props.user.user_first_name + " " + props.user.user_last_name}</Typography>
                 </Paper>
             </Popper>
-        </>
+        </div>
     )
 }

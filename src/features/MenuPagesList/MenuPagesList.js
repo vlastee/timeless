@@ -37,9 +37,9 @@ export function MenuPagesList() {
   // },[uiState])
 
   useEffect(()=>{
-    console.log(showMenu);
+    //console.log(showMenu);
     setShowMenu(uiState.showMenu)
-    console.log('Menu is '+ (uiState.showMenu ?'shown':'hidden'));
+    //console.log('Menu is '+ (uiState.showMenu ?'shown':'hidden'));
   },[uiState.showMenu])
 
   const handleDrawerClose = () => {
